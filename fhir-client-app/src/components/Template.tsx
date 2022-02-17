@@ -28,6 +28,8 @@ import AddIcon from '@mui/icons-material/Add';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { NavLink } from 'react-router-dom';
 import * as colors from "@mui/material/colors";
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 
 const drawerWidth = 240;
 
@@ -94,6 +96,8 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
   const [open, setOpen] = React.useState(true);
   const [drawerPatientState, changeDrawerPatientState] = React.useState(false);
   const [drawerLabState, changeDrawerLabState] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -120,6 +124,14 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
       display: 'inline-block',
       })
   };
+  
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -135,9 +147,10 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             FHIR client
           </Typography>
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -222,13 +235,12 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
                   <ListItemText primary="Add lab" />
                 </ListItemButton>
               </NavLink>
-              
             </List>
           </Collapse>
-          
-          
         </List>
+      
       </Drawer>
+      
       <Main open={open}>
         <DrawerHeader />
         <Typography paragraph>
