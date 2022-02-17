@@ -26,6 +26,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import BiotechIcon from '@mui/icons-material/Biotech';
 import AddIcon from '@mui/icons-material/Add';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import Labs from './pages/Lab'
 
 const drawerWidth = 240;
 
@@ -209,9 +210,11 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
       <Main open={open}>
         <DrawerHeader />
         <Typography paragraph>
-          hogehogehoge
+          {title}
         </Typography>
+          {children}
       </Main>
+
     </Box>
   );
 };
