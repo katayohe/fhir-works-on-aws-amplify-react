@@ -26,7 +26,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import BiotechIcon from '@mui/icons-material/Biotech';
 import AddIcon from '@mui/icons-material/Add';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import Labs from './pages/Lab'
+import { NavLink } from 'react-router-dom';
+import * as colors from "@mui/material/colors";
 
 const drawerWidth = 240;
 
@@ -90,7 +91,7 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
   title,
 }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [drawerPatientState, changeDrawerPatientState] = React.useState(false);
   const [drawerLabState, changeDrawerLabState] = React.useState(false);
 
@@ -108,6 +109,16 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
   
   const drawerLabStateClick = () => {
     changeDrawerLabState(!drawerLabState);
+  };
+  
+  const current = (isActive:boolean) => {
+    return({
+      color: isActive ? colors.blue[800] : 'black', 
+      textDecoration: 'none',
+      background: isActive ? colors.grey[100] : '', 
+      width: '100%',
+      display: 'inline-block',
+      })
   };
 
   return (
@@ -149,58 +160,69 @@ const PageTemplate: React.FC<GenericTemplateProps> = ({
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItemButton>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashbord" />
-          </ListItemButton>
+          <NavLink to="/" style={({isActive}) => (current(isActive))}>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashbord" />
+            </ListItemButton>
+          </NavLink>
           
           <ListItemButton onClick={drawerPatientStateClick}>
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="Patients" />
+            <ListItemText primary="Patient" />
             {drawerPatientState ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={drawerPatientState} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon>
-                  <ViewListIcon />
-                </ListItemIcon>
-                <ListItemText primary="List patients" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon>
-                  <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Add patient" />
-              </ListItemButton>
+              <NavLink to="/patient" style={({isActive}) => (current(isActive))}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <ViewListIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="List patients" />
+                </ListItemButton>
+              </NavLink>
+              <NavLink to="/patient/add" style={({isActive}) => (current(isActive))}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Add patient" />
+                </ListItemButton>
+              </NavLink>
             </List>
           </Collapse>
-          
+
           <ListItemButton onClick={drawerLabStateClick}>
             <ListItemIcon>
               <BiotechIcon />
             </ListItemIcon>
-            <ListItemText primary="Labs" />
+            <ListItemText primary="Lab" />
             {drawerLabState ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={drawerLabState} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton  sx={{ pl: 4 }}>
-                <ListItemIcon>
-                  <ViewListIcon />
-                </ListItemIcon>
-                <ListItemText primary="List labs" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon>
-                  <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Add lab" />
-              </ListItemButton>
+              <NavLink to="/lab" style={({isActive}) => (current(isActive))}>
+                <ListItemButton  sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <ViewListIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="List labs" />
+                </ListItemButton>
+              </NavLink>
+              <NavLink to="/lab/create" style={({isActive}) => (current(isActive))}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Add lab" />
+                </ListItemButton>
+              </NavLink>
+              
             </List>
           </Collapse>
           
